@@ -1,0 +1,57 @@
+<template name="game">
+  <h3>
+    <span class="text-x">{{#with game.player1._id}}{{userById}}{{/with}}</span> vs <span class="text-o">{{#with game.player2._id}}{{userById}}{{/with}}</span>
+  </h3>
+  
+  {{#if game.winner}}
+    <div class="alert alert-error">
+      <h3>{{#with game.winner}}{{userById}}{{/with}} won!</h3>
+    </div>
+  {{else}}
+    {{#if gameReady}}
+      <h4>{{#with game.currentTurnId}}{{userById}}{{/with}}'s turn</h4>
+    {{/if}}
+  {{/if}}
+  
+  {{#if gameReady}}
+    {{#each board}}
+      {{#if left}}
+        <div class="clear"></div>
+      {{/if}}
+      <div class="ttt-small{{#if disabled}} ttt-disabled{{else}} ttt-enabled{{/if}}{{#if winnerX}} winner-x{{/if}}{{#if winnerO}} winner-o{{/if}}">
+        <div class="ttt-row">
+          <div class="ttt-cell taken-{{b.tl}}">{{#if b.tl}}<span>{{b.tl}}</span>{{else}}{{#if myTurn}}<input type="button" id="{{pos}}-tl" class="move-btn" value=" ">{{/if}}{{/if}}</div>
+          <div class="ttt-cell taken-{{b.tc}}">{{#if b.tc}}<span>{{b.tc}}</span>{{else}}{{#if myTurn}}<input type="button" id="{{pos}}-tc" class="move-btn" value=" ">{{/if}}{{/if}}</div>
+          <div class="ttt-cell taken-{{b.tr}}">{{#if b.tr}}<span>{{b.tr}}</span>{{else}}{{#if myTurn}}<input type="button" id="{{pos}}-tr" class="move-btn" value=" ">{{/if}}{{/if}}</div>
+        </span></div>
+        <div class="ttt-row">
+          <div class="ttt-cell taken-{{b.ml}}">{{#if b.ml}}<span>{{b.ml}}</span>{{else}}{{#if myTurn}}<input type="button" id="{{pos}}-ml" class="move-btn" value=" ">{{/if}}{{/if}}</div>
+          <div class="ttt-cell taken-{{b.mc}}">{{#if b.mc}}<span>{{b.mc}}</span>{{else}}{{#if myTurn}}<input type="button" id="{{pos}}-mc" class="move-btn" value=" ">{{/if}}{{/if}}</div>
+          <div class="ttt-cell taken-{{b.mr}}">{{#if b.mr}}<span>{{b.mr}}</span>{{else}}{{#if myTurn}}<input type="button" id="{{pos}}-mr" class="move-btn" value=" ">{{/if}}{{/if}}</div>
+        </span></div>
+        <div class="ttt-row">
+          <div class="ttt-cell taken-{{b.bl}}">{{#if b.bl}}<span>{{b.bl}}</span>{{else}}{{#if myTurn}}<input type="button" id="{{pos}}-bl" class="move-btn" value=" ">{{/if}}{{/if}}</div>
+          <div class="ttt-cell taken-{{b.bc}}">{{#if b.bc}}<span>{{b.bc}}</span>{{else}}{{#if myTurn}}<input type="button" id="{{pos}}-bc" class="move-btn" value=" ">{{/if}}{{/if}}</div>
+          <div class="ttt-cell taken-{{b.br}}">{{#if b.br}}<span>{{b.br}}</span>{{else}}{{#if myTurn}}<input type="button" id="{{pos}}-br" class="move-btn" value=" ">{{/if}}{{/if}}</div>
+        </div>
+      </div>
+    {{/each}}
+
+    <div class="clear"></div>
+  {{else}}
+    <h3>Awaiting a challenger...</h3>
+    {{#if currentUser}}
+      {{#if myGame}}
+        <div>Challenge someone:</div>
+        {{#each playerList}}
+          <div>
+            <input type="button" id="{{_id}}" class="btn btn-small challenge-button challenge-{{_id}}" value="{{displayName}}" />
+          </div>
+        {{/each}}
+      {{else}}
+        <input type="button" id="{{_id}}" class="btn btn-small join-button join-{{_id}}" value="JOIN" />
+      {{/if}}
+    {{/if}}
+  {{/if}}
+  <div><a href="/game/{{gameId}}">Invite URL</a></div>
+</template>
